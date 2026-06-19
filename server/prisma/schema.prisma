@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Camion {
+  id              Int      @id @default(autoincrement())
+  immatriculation String   @unique
+  marque          String
+  capaciteCharges Float
+  statut          String   @default("disponible")
+   latitude  Float?
+  longitude Float?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  chauffeurs      Chauffeur[]
+  livraisons      Livraison[]
+  ravitaillements Ravitaillement[]
+}
+
+model Chauffeur {
+  id           Int      @id @default(autoincrement())
+  nom          String
+  telephone    String
+  numeroPermis String   @unique
+  statut       String   @default("disponible")
+  camionId     Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  camion          Camion?          @relation(fields: [camionId], references: [id])
+  livraisons      Livraison[]
+  ravitaillements Ravitaillement[]
+}
+
+model Livraison {
+  id               Int      @id @default(autoincrement())
+  numeroLivraison  String   @unique @default(cuid())
+  camionId         Int
+  chauffeurId      Int
+  villeDepart      String
+  villeDestination String
+  date             DateTime
+  statut           String   @default("en_attente")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  camion          Camion           @relation(fields: [camionId], references: [id])
+  chauffeur       Chauffeur        @relation(fields: [chauffeurId], references: [id])
+  ravitaillements Ravitaillement[]
+}
+
+model Ravitaillement {
+  id          Int       @id @default(autoincrement())
+  camionId    Int
+  chauffeurId Int
+  litres      Float
+  type        String
+  ville       String
+  date        DateTime
+  statut String? // MODIFIÉ : nullable
+  cout        Float?
+  recu        String?
+  livraisonId Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  camion    Camion     @relation(fields: [camionId], references: [id])
+  chauffeur Chauffeur  @relation(fields: [chauffeurId], references: [id])
+  livraison Livraison? @relation(fields: [livraisonId], references: [id])
+}
+
+model Approvisionnement {
+  id           Int      @id @default(autoincrement())
+  litres       Float
+  prixParLitre Float
+  coutTotal    Float
+  fournisseur  String?  // optionnel
+  note         String?  // optionnel
+  date         DateTime
+  createdAt    DateTime @default(now())
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nom       String
+  telephone String
+  role      String   @default("gestionnaire") // admin | gestionnaire | chauffeur
+  statut    String   @default("actif") // actif | inactif
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Parametres {
+  id              Int      @id @default(autoincrement())
+  seuilAlerte     Float    @default(0)
+  prixParLitre    Float    @default(0)
+  updatedAt       DateTime @updatedAt
+}
+
+model Activite {
+  id          Int      @id @default(autoincrement())
+  type        String   // livraison | ravitaillement | camion | chauffeur
+  action      String   // created | updated | deleted
+  titre       String
+  description String?
+  statut      String?
+  createdAt   DateTime @default(now())
+}

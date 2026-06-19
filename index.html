@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9VZd44VKfL5PhiHn2Q9iWhKijFcG-ooU",
+    authDomain: "yallau-fleet.firebaseapp.com",
+    projectId: "yallau-fleet",
+    storageBucket: "yallau-fleet.firebasestorage.app",
+    messagingSenderId: "785778384502",
+    appId: "1:785778384502:web:544b58adbf9ff45a890957"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window._auth = getAuth(app);
+</script>
+    <title>yalau-fleet-test</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
