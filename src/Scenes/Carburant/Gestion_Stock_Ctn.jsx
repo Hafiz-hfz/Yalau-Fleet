@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import card from '@mui/material/card';
+// import Card from '@mui/material/Card';
 // btn apro
 import Button from '@mui/material/Button';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -110,7 +110,7 @@ const pourcentageUtilise = stockMois.totalAchete > 0
                                         </Typography>
                                         {/* Tableau */}
                                             
-                                        <TableContainer  component={card}>
+                                        <TableContainer  component={Paper}>
                                               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                                 <TableHead>
                                                   <TableRow>
