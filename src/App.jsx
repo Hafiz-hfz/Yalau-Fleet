@@ -5,7 +5,7 @@ import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import './App.css'
 import Topbar from './Components/TopBar';
 import SideBar from './Components/SideBar';
-import Dash from './Scenes/Dashboard/dash';
+import Dash from './Scenes/Dashboard/Dash';
 import Flottes from './Scenes/Flottes/Flottes';
 import Chauffeur from './Scenes/Chauffeur/Chauffeur';
 import Livraisons from './Scenes/Livraison/Livraison';
