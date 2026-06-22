@@ -14,7 +14,7 @@ import Parametres from './Scenes/Parametre/parametres';
 
 function App() {
   const [theme, colorMode] = useMode();
-
+  console.log(import.meta.env.VITE_API_URL)
   useEffect(() => {
     const root = document.documentElement;
     theme.palette.mode === "dark"
