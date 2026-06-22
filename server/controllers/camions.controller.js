@@ -4,6 +4,7 @@ const prisma = require('../prisma/client') //importe l'instance Prisma qu'on a c
 // insertion dans camion (insert into)
 exports.create = async (req, res) => { // create est importer pour etre utiliser 
   try {
+    console.log("POST reçu :", req.body);
     const {  immatriculation, marque, capaciteCharges,statut,  latitude, longitude } = req.body // ce que reat envoie 
     const camion = await prisma.camion.create({ // insère une nouvelle ligne dans la table Camion avec ces données.
       data: { immatriculation, marque, capaciteCharges,statut, 
