@@ -19,13 +19,13 @@ const AddRavitaillementDialog = ({ open, onClose, onRefresh}) => {
   const [livraisons, setLivraisons] = useState([])
 
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/camions')
+    fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
       .then(res => res.json()).then(data => setCamions(data))
 
-    fetch('${import.meta.env.VITE_API_URL}/api/chauffeurs')
+    fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs`)
       .then(res => res.json()).then(data => setChauffeurs(data))
 
-    fetch('${import.meta.env.VITE_API_URL}/api/livraisons')
+    fetch(`${import.meta.env.VITE_API_URL}/api/livraisons`)
       .then(res => res.json()).then(data => setLivraisons(data))
   }, [])
 
@@ -95,7 +95,7 @@ const handleSubmit = async () => {
     if (formData.recu) formPayload.append('recu', formData.recu)
     if (formData.livraison_liee) formPayload.append('livraisonId', formData.livraison_liee)
 
-    const response = await fetch('${import.meta.env.VITE_API_URL}/api/carburant', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/carburant`, {
       method: 'POST',
       body: formPayload // PAS de Content-Type header — FormData le gère automatiquement
     })

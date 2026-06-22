@@ -53,7 +53,7 @@ function Activity() {
   const [activites, setActivites] = useState([])
 
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/dashboard/activites')
+    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/activites`)
       .then(res => res.json())
       .then(data => setActivites(data))
       .catch(err => console.error('Erreur:', err))

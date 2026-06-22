@@ -48,7 +48,7 @@ const handleSubmit = async () => { // MODIFIÉ : ajout async
 
   try {
     // AJOUTÉ : envoi des données à l'API Express
-    const response = await fetch('${import.meta.env.VITE_API_URL}/api/camions', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/camions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -21,7 +21,7 @@ const EditChauffeurDialog = ({ open, onClose, chauffeur, onRefresh  }) => {
 
    // AJOUTÉ : charge les camions
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/camions')
+    fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
       .then(res => res.json())
       .then(data => setCamions(data))
   }, [])

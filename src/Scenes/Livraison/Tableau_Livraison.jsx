@@ -259,7 +259,7 @@ export default function Tableau_Livraison({refreshKey}) {
 
  // AJOUTÉ
   const fetchLivraisons = () => {
-    fetch('${import.meta.env.VITE_API_URL}/api/livraisons')
+    fetch(`${import.meta.env.VITE_API_URL}/api/livraisons`)
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(l => createData(

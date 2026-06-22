@@ -29,11 +29,11 @@ const AddLivraisonDialog = ({ open, onClose,onRefresh  }) => {
 
    // AJOUTÉ : charge camions et chauffeurs ( pour le select)
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/camions')
+    fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
       .then(res => res.json())
       .then(data => setCamions(data))
 
-    fetch('${import.meta.env.VITE_API_URL}/api/chauffeurs')
+    fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs`)
       .then(res => res.json())
       .then(data => setChauffeurs(data))
   }, [])
@@ -65,7 +65,7 @@ const AddLivraisonDialog = ({ open, onClose,onRefresh  }) => {
   }
 
   try {
-    const response = await fetch('${import.meta.env.VITE_API_URL}/api/livraisons', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/livraisons`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

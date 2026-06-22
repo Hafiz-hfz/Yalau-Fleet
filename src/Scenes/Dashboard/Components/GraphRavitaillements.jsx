@@ -5,7 +5,7 @@ function GraphRavitaillements() {
   const [data, setData] = useState({})
 
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/dashboard/ravitaillements-jour')
+    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/ravitaillements-jour`)
       .then(res => res.json())
       .then(setData)
   }, [])

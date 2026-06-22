@@ -35,7 +35,7 @@ function  PieCenterLabel({ children })  {
 export default function PieChartWithCenterLabel() {
    const [statuts, setStatuts] = useState({ enRoute: 0, disponible: 0, enPanne: 0, total: 0 })
     useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/dashboard/statut-flotte')
+    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/statut-flotte`)
       .then(res => res.json())
       .then(setStatuts)
   }, [])

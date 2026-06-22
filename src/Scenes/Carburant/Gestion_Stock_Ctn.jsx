@@ -31,7 +31,7 @@ function Gestion_Stock_Ctn () {
 
       // AJOUTÉ : charge les appros et le stock
   const fetchAppros = () => {
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/appro')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/appro`)
       .then(res => res.json())
       .then(data => {
         const formatted = data.slice(0, 3).map(a => createData(
@@ -44,7 +44,7 @@ function Gestion_Stock_Ctn () {
         setRows(formatted)
       })
 
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/stock')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/stock`)
       .then(res => res.json())
       .then(data => setStock(data))
   }
@@ -56,7 +56,7 @@ const pourcentageUtilise = stockMois.totalAchete > 0
 
   useEffect(() => {
     fetchAppros()
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/stock-mois')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/stock-mois`)
     .then(res => res.json())
     .then(data => setStockMois(data))
 

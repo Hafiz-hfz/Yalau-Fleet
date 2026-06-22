@@ -18,9 +18,9 @@ const EditRavitaillementDialog = ({ open, onClose, ravitaillement, onRefresh }) 
   const [livraisons, setLivraisons] = useState([])
 
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/camions').then(res => res.json()).then(setCamions)
-    fetch('${import.meta.env.VITE_API_URL}/api/chauffeurs').then(res => res.json()).then(setChauffeurs)
-    fetch('${import.meta.env.VITE_API_URL}/api/livraisons').then(res => res.json()).then(setLivraisons)
+    fetch(`${import.meta.env.VITE_API_URL}/api/camions`).then(res => res.json()).then(setCamions)
+    fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs`).then(res => res.json()).then(setChauffeurs)
+    fetch(`${import.meta.env.VITE_API_URL}/api/livraisons`).then(res => res.json()).then(setLivraisons)
   }, [])
 
   useEffect(() => {

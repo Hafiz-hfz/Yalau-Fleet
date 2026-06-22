@@ -54,7 +54,7 @@ function Info_Flotte({ onRefresh }) {
   const [kpi, setKpi] = useState({ total: 0, operationnels: 0, enMaintenance:0,enRoute:0 })
   
   useEffect(() => {
-  fetch('${import.meta.env.VITE_API_URL}/api/camions/kpi')
+  fetch(`${import.meta.env.VITE_API_URL}/api/camions/kpi`)
     .then(res => res.json())
     .then(data => setKpi(data))
 }, [])

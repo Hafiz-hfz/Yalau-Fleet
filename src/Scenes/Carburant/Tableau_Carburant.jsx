@@ -326,7 +326,7 @@ const filteredRows = rows.filter((row) => {
 
    // AJOUTÉ
   const fetchRavitaillements = () => {
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant`)
       .then(res => res.json())
       .then(data => {
         const formatted = data.map(r => createData(

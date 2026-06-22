@@ -32,7 +32,7 @@ function InfoCard_dashboard() {
     })
 
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/dashboard/kpi')
+    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/kpi`)
       .then(res => res.json())
       .then(data => setKpi(data))
   }, [])

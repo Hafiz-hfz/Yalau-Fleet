@@ -43,7 +43,7 @@ const AddApproDialog = ({ open, onClose, onRefresh  }) => {
     }
 
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/carburant/appro', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/carburant/appro`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

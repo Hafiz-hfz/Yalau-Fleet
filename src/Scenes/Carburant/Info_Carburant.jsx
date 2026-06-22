@@ -75,17 +75,17 @@ const [volumeMois, setVolumeMois] = useState(0)
   
 
  useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/stock')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/stock`)
       .then(res => res.json())
       .then(data => setStock(data))
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/stock-evolution')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/stock-evolution`)
       .then(res => res.json())
       .then(data => setEvolution(data.evolution))
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/cout-mois')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/cout-mois`)
      .then(res => res.json()).then(data => setCoutMois(data.coutTotal))
-    fetch('${import.meta.env.VITE_API_URL}/api/parametres')
+    fetch(`${import.meta.env.VITE_API_URL}/api/parametres`)
       .then(res => res.json()).then(data => setSeuilAlerte(data.seuilAlerte))
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/volume-mois')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/volume-mois`)
       .then(res => res.json()).then(data => setVolumeMois(data.volumeTotal))
 
   }, [])

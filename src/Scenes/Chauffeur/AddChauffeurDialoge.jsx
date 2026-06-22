@@ -21,7 +21,7 @@ const AddChauffeurDialog = ({ open, onClose , onRefresh  }) => {
    const [camions, setCamions] = useState([])
 
 useEffect(() => {
-  fetch('${import.meta.env.VITE_API_URL}/api/camions')
+  fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
     .then(res => res.json())
     .then(data => setCamions(data))
 }, [])
@@ -58,7 +58,7 @@ useEffect(() => {
   }
 
   try {
-    const response = await fetch('${import.meta.env.VITE_API_URL}/api/chauffeurs', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

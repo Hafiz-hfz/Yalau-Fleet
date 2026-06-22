@@ -61,7 +61,7 @@ const [kpi, setKpi] = useState({ total24h: 0, totalHier: 0, evolution: 0, enCour
 
   
 useEffect(() => {
-  fetch('${import.meta.env.VITE_API_URL}/api/livraisons/kpi')
+  fetch(`${import.meta.env.VITE_API_URL}/api/livraisons/kpi`)
   .then(res => res.json())
   .then(data => setKpi(data))
 }, [])

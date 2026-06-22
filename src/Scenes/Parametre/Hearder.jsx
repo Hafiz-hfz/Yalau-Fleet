@@ -14,7 +14,7 @@ function Heard () {
 
        // Charge les paramètres au démarrage
     useEffect(() => {
-        fetch('${import.meta.env.VITE_API_URL}/api/parametres')
+        fetch(`${import.meta.env.VITE_API_URL}/api/parametres`)
         .then(res => res.json())
         .then(data => {
             setSeuilAlerte(data.seuilAlerte)
@@ -24,7 +24,7 @@ function Heard () {
 
      // Sauvegarde
         const handleSave = async () => {
-            await fetch('${import.meta.env.VITE_API_URL}/api/parametres', {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/parametres`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ seuilAlerte, prixParLitre })

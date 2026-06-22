@@ -226,7 +226,7 @@ export default function Tableau_Carburant({ refreshKey }) {
     const [open, setOpen] = useState(false); // Dialogue fermeture
     const [rows, setRows] = useState([]);
     const fetchUsers = () => {
-    fetch('${import.meta.env.VITE_API_URL}/api/users')
+    fetch(`${import.meta.env.VITE_API_URL}/api/users`)
       .then(res => res.json())
       .then(data => {
          console.log('data reçu:', data) // AJOUTÉ

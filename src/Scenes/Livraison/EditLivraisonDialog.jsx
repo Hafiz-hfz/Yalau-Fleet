@@ -17,11 +17,11 @@ const [camions, setCamions] = useState([])     // AJOUTÉ
 
    // AJOUTÉ : charge camions et chauffeurs
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/camions')
+    fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
       .then(res => res.json())
       .then(data => setCamions(data))
 
-    fetch('${import.meta.env.VITE_API_URL}/api/chauffeurs')
+    fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs`)
       .then(res => res.json())
       .then(data => setChauffeurs(data))
   }, [])

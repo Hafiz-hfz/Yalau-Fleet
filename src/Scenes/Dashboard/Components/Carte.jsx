@@ -19,7 +19,7 @@ function Carte () {
     const [camions, setCamions] = useState([])
 
   useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/camions')
+    fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
       .then(res => res.json())
       .then(data => setCamions(data.filter(c => c.latitude && c.longitude)))
   }, [])

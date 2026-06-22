@@ -59,7 +59,7 @@ function Info_Chauf({onRefresh} ) {
   const [kpi, setKpi] = useState({ disponibilite: 0, disponibles: 0, total: 0,  evolutionDispo: 0, enMission: 0 })
 
 useEffect(() => {
-  fetch('${import.meta.env.VITE_API_URL}/api/chauffeurs/kpi')
+  fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs/kpi`)
     .then(res => res.json())
     .then(data => setKpi(data))
 }, [])

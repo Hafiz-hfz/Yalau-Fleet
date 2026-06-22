@@ -247,7 +247,7 @@ const [rows, setRows] = useState([]);
 
 //fetch dans une fonction réutilisable
 const fetchCamions = () => {
-  fetch('${import.meta.env.VITE_API_URL}/api/camions')
+  fetch(`${import.meta.env.VITE_API_URL}/api/camions`)
     .then(res => res.json())
     .then(data => {
       const formatted = data.map(camion => createData(

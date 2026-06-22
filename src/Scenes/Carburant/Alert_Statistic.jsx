@@ -17,16 +17,16 @@ function Alert_Statistic () {
 })
 
        useEffect(() => {
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/stock')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/stock`)
       .then(res => res.json())
       .then(data => setStock(data))
 
-    fetch('${import.meta.env.VITE_API_URL}/api/parametres')
+    fetch(`${import.meta.env.VITE_API_URL}/api/parametres`)
       .then(res => res.json())
       .then(data => setSeuilAlerte(data.seuilAlerte))
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/top-consommateurs')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/top-consommateurs`)
       .then(res => res.json()).then(data => setTopConsommateurs(data))
-    fetch('${import.meta.env.VITE_API_URL}/api/carburant/stats-type')
+    fetch(`${import.meta.env.VITE_API_URL}/api/carburant/stats-type`)
         .then(res => res.json())
         .then(data => setStatsType(data))
   }, [])
