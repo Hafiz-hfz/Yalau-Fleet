@@ -6,8 +6,7 @@ const app = express()
 const path = require('path')
 // app.use(cors({ origin: 'http://localhost:3000' }))
 app.use(cors({ 
-  origin: 
-   process.env.CLIENT_URL
+  origin: process.env.CLIENT_URL || "*"
 }))
 app.use(express.json())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
@@ -29,5 +28,15 @@ app.use('/api/parametres', (req, res, next) => {
 }, require('./routes/parametres'))
 console.log('route parametres chargée')
 app.get('/test', (req, res) => res.json({ ok: true }))
+
+app.get("/", (req, res) => {
+  res.send("API OK");
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+ 
 module.exports = app
+
 

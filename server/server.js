@@ -8,17 +8,10 @@
 console.log("ENV PORT =", process.env.PORT)
 const app = require('./app')
 
-const PORT = process.env.PORT || 8080
+// const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT 
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Serveur démarré sur le port", PORT)
 })
 
-app.get("/", (req, res) => {
-  res.send("API OK");
-});
-
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
- 
