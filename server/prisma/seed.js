@@ -54,6 +54,8 @@ async function main() {
   // 2. UTILISATEUR ADMIN
   // ============================================
   const hashedPassword = await bcrypt.hash('yalau2024', 10)
+  
+  // Yalau Compte
   await prisma.user.upsert({
     where: { email: 'admin@yalau.com' },
     update: {},
@@ -66,6 +68,8 @@ async function main() {
       statut: 'actif'
     }
   })
+
+
   console.log('Compte admin OK (admin@yalau.com / yalau2024)')
 
   // ============================================

@@ -134,7 +134,10 @@ exports.getKpiLivraisons = async (req, res) => {
     let evolution = 0
     if (totalHier > 0) {
       evolution = Math.round(((total24h - totalHier) / totalHier) * 100)
+    }else if (total24h > 0 ) {
+      evolution = 100 // Modification add
     }
+    
 
     // En cours
 
