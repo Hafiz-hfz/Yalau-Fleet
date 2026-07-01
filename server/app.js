@@ -24,7 +24,7 @@ console.log('route carburant chargée')
 
 app.use('/api/users', require('./routes/users'))
 
-app.use('/api/auth', require('./routes/auth'))
+// app.use('/api/auth', require('./routes/auth'))
 app.use('/api/parametres', (req, res, next) => {
   console.log('requête parametres reçue:', req.method, req.url)
   next()
