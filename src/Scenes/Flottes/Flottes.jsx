@@ -2,6 +2,9 @@
 import { useState, useCallback } from "react"
 import Info_Flotte from "./Component/Info_Flotte"
 import Tableau_Flotte from "./Component/Tableau_Flotte"
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+
 // AJOUTÉ : fetchCamions remonté ici
  
 function Flottes () {
@@ -12,7 +15,9 @@ function Flottes () {
         <div>
            <Info_Flotte onRefresh={triggerRefresh} />
         <Tableau_Flotte refreshKey={refreshKey} />
-            
+            <Box sx={{ display: 'flex', mt: 3, justifyContent: "space-between" }}>
+                <Button variant="outlined">Rapport Disponibilité (XLS)</Button>
+            </Box>
         </div>
     )
 }

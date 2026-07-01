@@ -117,7 +117,16 @@ exports.getKpiCamions = async (req, res) => {
       where: { statut: 'en_route' }
     })
 
-    res.json({ total, operationnels, enMaintenance,enRoute })
+    
+
+
+    res.json({ 
+          total, 
+          operationnels,
+          enMaintenance,
+          enRoute,
+         
+     })
     
   } catch (error) {
     res.status(500).json({ error: error.message })

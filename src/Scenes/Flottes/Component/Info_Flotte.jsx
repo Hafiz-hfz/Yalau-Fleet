@@ -52,6 +52,10 @@ function Info_Flotte({ onRefresh }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false); // Dialogue fermeture
   const [kpi, setKpi] = useState({ total: 0, operationnels: 0, enMaintenance:0,enRoute:0 })
+
+  // Calcule pour les taux disponibilité et en mission
+
+  
   
   useEffect(() => {
   fetch(`${import.meta.env.VITE_API_URL}/api/camions/kpi`)
@@ -87,6 +91,18 @@ function Info_Flotte({ onRefresh }) {
       title: 'En route',
       description: `${kpi.enRoute}`,
       icon : <LocalShippingOutlined sx={{ color: "#6870fa" }} />
+    },
+     {
+      id: 5,
+      title: 'Taux de Disponibilité',
+      description: `${kpi.enRoute}` ,
+      icon: <LocalShippingOutlined sx={{ color: "#6870fa" }} />
+    },
+    {
+      id: 6,
+      title: 'Taux d\'utilisation',
+      description: `${kpi.enRoute}` ,
+      icon: <LocalShippingOutlined sx={{ color: "#6870fa" }} />
     },
   ];
 

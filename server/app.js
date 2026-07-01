@@ -5,9 +5,12 @@ require('dotenv').config()
 const app = express()
 const path = require('path')
 // app.use(cors({ origin: 'http://localhost:3000' }))
-app.use(cors({ 
-  origin: process.env.CLIENT_URL || "*"
-}))
+// app.use(cors({ 
+//   origin: process.env.CLIENT_URL || "*"
+// }))
+app.use(cors())
+// Probleme  Cors
+console.log("CLIENT_URL =", process.env.CLIENT_URL)
 app.use(express.json())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
