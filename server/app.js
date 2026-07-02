@@ -117,7 +117,7 @@ app.get('/seed-data', async (req, res) => {
     }
 
     // Livraisons + ravitaillements (14 jours seulement pour éviter timeout)
-    for (let jour = 14; jour >= 0; jour--) {
+    for (let jour = 7; jour >= 0; jour--) {
       const d = new Date(); d.setDate(d.getDate() - jour)
       const camion = camions[Math.floor(Math.random() * camions.length)]
       const chauffeur = chauffeurs.find(c => c.camionId === camion.id) || chauffeurs[0]
