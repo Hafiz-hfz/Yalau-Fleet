@@ -4,6 +4,8 @@ import {
   Button, TextField, MenuItem, Select, InputLabel,
   FormControl, Box
 } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+
 
 const EditVehiculeDialog = ({ open, onClose, vehicule,onRefresh }) => {
 
@@ -27,6 +29,13 @@ const EditVehiculeDialog = ({ open, onClose, vehicule,onRefresh }) => {
         });
       }
     }, [vehicule]);  // se déclenche chaque fois qu'un nouveau véhicule est sélectionné
+
+    const [chauffeurs, setChauffeurs] = useState([])
+useEffect(() => {
+  fetch(`${import.meta.env.VITE_API_URL}/api/chauffeurs`)
+    .then(res => res.json())
+    .then(data => setChauffeurs(data))
+}, [])
 
   if (!vehicule) return null;
 
@@ -98,20 +107,17 @@ const handleSubmit = async () => {
           />
 
           {/* Chauffeur assigné */}
-          <FormControl fullWidth size="small">
-            <InputLabel>Chauffeur assigné</InputLabel>
-            <Select
-              name="chauffeur"
-              value={formData.chauffeur}
-              onChange={handleChange}
-              label="Chauffeur assigné"
-            >
-              {/* TODO: remplacer par la liste réelle */}
-              <MenuItem value="kouadio">Kouadio</MenuItem>
-              <MenuItem value="mensah">Mensah</MenuItem>
-              <MenuItem value="adjovi">Adjovi</MenuItem>
-            </Select>
-          </FormControl>
+          <Autocomplete
+              options={chauffeurs}
+              value={chauffeurs.find(c => c.id === formData.camionId) || null}
+              getOptionLabel={(option) => `${option.nom}`}
+              onChange={(e, newValue) => setFormData({ ...formData, chauffeur: newValue ? newValue.id : "" })}
+              renderInput={(params) => (
+                <TextField {...params} label="Chauffeur assigné" size="small" />
+              )}
+            />
+
+           
 
           {/* Statut */}
           <FormControl fullWidth size="small">
