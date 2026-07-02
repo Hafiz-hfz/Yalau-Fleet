@@ -20,6 +20,7 @@ model Camion {
   chauffeurs      Chauffeur[]
   livraisons      Livraison[]
   ravitaillements Ravitaillement[]
+  historiqueStatuts HistoriqueStatutCamion[]
 }
 
 model Chauffeur {
@@ -112,4 +113,12 @@ model Activite {
   description String?
   statut      String?
   createdAt   DateTime @default(now())
+}
+
+model HistoriqueStatutCamion {
+  id        Int      @id @default(autoincrement())
+  camionId  Int
+  statut    String
+  date      DateTime @default(now())
+  camion    Camion   @relation(fields: [camionId], references: [id])
 }
