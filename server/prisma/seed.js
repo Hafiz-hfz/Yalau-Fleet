@@ -223,3 +223,11 @@ main()
   .finally(async () => {
     await prisma.$disconnect()
   })
+
+  // Ajoute à la fin du fichier, remplace l'appel actuel
+module.exports = { main }
+
+// Garde aussi l'exécution directe
+if (require.main === module) {
+  main().catch(console.error).finally(() => prisma.$disconnect())
+}

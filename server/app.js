@@ -43,3 +43,13 @@ app.get("/health", (req, res) => {
 module.exports = app
 
 
+// temporaire
+app.get('/run-seed', async (req, res) => {
+  try {
+    const { main } = require('./prisma/seed')
+    await main()
+    res.json({ message: 'Seed terminé' })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
