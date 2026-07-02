@@ -8,7 +8,8 @@
 // si relancé), mais Livraisons/Ravitaillements/Approvisionnements sont créés sans
 // upsert -> si tu relances le script, décommente la section "NETTOYAGE" plus bas.
 
-require('dotenv').config()
+// require('dotenv').config()
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') })
 // const prisma = require('./client')
 const prisma = require('./client')
 const bcrypt = require('bcrypt')
