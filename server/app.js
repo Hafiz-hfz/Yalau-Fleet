@@ -45,16 +45,29 @@ app.get('/seed-historique', async (req, res) => {
     const prisma = require('./prisma/client')
     const camions = await prisma.camion.findMany()
     
+    // Statuts variés par jour pour simuler une vraie semaine
+    const statutsParJour = [
+      ['disponible', 'en_route'],    // j-6
+      ['en_route', 'en_route'],      // j-5
+      ['en_panne', 'en_route'],      // j-4
+      ['disponible', 'en_panne'],    // j-3
+      ['en_route', 'disponible'],    // j-2
+      ['disponible', 'en_route'],    // j-1
+      ['en_route', 'en_route'],      // aujourd'hui
+    ]
+
     for (let j = 6; j >= 0; j--) {
-      for (const camion of camions) {
+      for (let i = 0; i < camions.length; i++) {
         const d = new Date()
         d.setDate(d.getDate() - j)
+        d.setHours(8, 0, 0, 0)
+        const statut = statutsParJour[6 - j][i] || camions[i].statut
         await prisma.historiqueStatutCamion.create({
-          data: { camionId: camion.id, statut: camion.statut, date: d }
+          data: { camionId: camions[i].id, statut, date: d }
         })
       }
     }
-    res.json({ message: `Historique OK pour ${camions.length} camions` })
+    res.json({ message: `Historique 7 jours créé pour ${camions.length} camions` })
   } catch (e) { res.status(500).json({ error: e.message }) }
 })
  
