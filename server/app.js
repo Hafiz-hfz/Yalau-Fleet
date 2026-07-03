@@ -39,20 +39,26 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
+
+app.get('/seed-historique', async (req, res) => {
+  try {
+    const prisma = require('./prisma/client')
+    const camions = await prisma.camion.findMany()
+    
+    for (let j = 6; j >= 0; j--) {
+      for (const camion of camions) {
+        const d = new Date()
+        d.setDate(d.getDate() - j)
+        await prisma.historiqueStatutCamion.create({
+          data: { camionId: camion.id, statut: camion.statut, date: d }
+        })
+      }
+    }
+    res.json({ message: `Historique OK pour ${camions.length} camions` })
+  } catch (e) { res.status(500).json({ error: e.message }) }
+})
  
 module.exports = app
 
-app.get('/seed-camions', async (req, res) => { 
-      const prisma = require('./prisma/client')
-    for (let j = 6; j >= 0; j--) {
-  for (const camion of camionsCreated) {
-    const d = new Date()
-    d.setDate(d.getDate() - j)
-    await prisma.historiqueStatutCamion.create({
-      data: { camionId: camion.id, statut: camion.statut, date: d }
-    })
-  }
-}
-}
-)
+
  
