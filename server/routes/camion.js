@@ -6,6 +6,7 @@ router.get('/kpi', camionsController.getKpiCamions)
 
 router.post('/', camionsController.create)//insert
 router.get('/', camionsController.getAll)//select
+router.get('/taux-semaine', camionsController.getTauxSemaine)
 router.put('/:id', camionsController.update) // update
 router.delete('/:id', camionsController.delete) // delete
 

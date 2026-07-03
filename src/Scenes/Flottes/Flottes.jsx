@@ -16,7 +16,7 @@ function Flottes () {
            <Info_Flotte onRefresh={triggerRefresh} />
         <Tableau_Flotte refreshKey={refreshKey} />
             <Box sx={{ display: 'flex', mt: 3, justifyContent: "space-between" }}>
-                <Button variant="outlined">Rapport Disponibilité (XLS)</Button>
+                
             </Box>
         </div>
     )

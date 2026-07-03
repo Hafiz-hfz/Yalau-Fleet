@@ -1,7 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from "react";
-
+// fichier excel
+import * as XLSX from 'xlsx'
+import Button from '@mui/material/Button';
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -45,12 +48,7 @@ function createData(id,immatriculation,marque_modele,capacite,chauffeur_assigne,
   };
 }
 
-// const rows = [
-//   createData('BJ-8754',  '4x4', 52, 'BIAOU', "Actif", 'Parakou'),
-//   createData('BJ-8785',  'Lenovo', 120, 'KOKOU', 'En maintenance', 'Calavi'),
-//   createData('BJ-5754',  'Hitler', 300, 'BIOVI', 'En pause', 'Avotrou'),
-// ];
-
+ 
 
 
 
@@ -285,6 +283,23 @@ const handleDelete = async (id) => {
   } catch (error) {
     console.error('Erreur:', error)
   }
+}
+
+// : Export exel
+const handleExport = async () => {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/camions/taux-semaine`)
+  const data = await res.json()
+
+  const rows = data.map(d => ({
+    'Jour': d.jour,
+    'Taux de Disponibilité (%)': d.tauxDispo,
+    "Taux d'Utilisation (%)": d.tauxUtilisation
+  }))
+
+   const ws = XLSX.utils.json_to_sheet(rows)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Taux Flotte')
+  XLSX.writeFile(wb, `taux_flotte_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.xlsx`)
 }
 
 
@@ -541,7 +556,10 @@ const handleDelete = async (id) => {
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> <br />
+      <Button variant="outlined" startIcon={<DownloadOutlinedIcon />} onClick={handleExport} sx={{ mt: 2 }}>
+      Rapport Disponibilité/Utilisation (XLS)
+      </Button>
     </Box>
   );
 }

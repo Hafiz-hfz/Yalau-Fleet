@@ -51,12 +51,18 @@ exports.update = async (req, res) => {
     const { id } = req.params
     const { immatriculation, marque, capaciteCharges, statut, latitude, longitude  } = req.body
     const camion = await prisma.camion.update({
+      
       where: { id: parseInt(id) },
       data: { immatriculation, marque, capaciteCharges, statut, 
          latitude: latitude ? parseFloat(latitude) : null,
          longitude: longitude ? parseFloat(longitude) : null
        }
     })
+    // pour calculer les taux disponibiliter cam
+    await prisma.historiqueStatutCamion.create({
+    data: { camionId: camion.id, statut: camion.statut }
+    })
+
     // AJOUTÉ : log activité
       await prisma.activite.create({
         data: {
@@ -128,6 +134,48 @@ exports.getKpiCamions = async (req, res) => {
          
      })
     
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+// Taux de utilisation et dispo
+
+exports.getTauxSemaine = async (req, res) => {
+  try {
+    const jours = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
+    const camions = await prisma.camion.findMany()
+    const resultat = []
+
+    for (let i = 6; i >= 0; i--) {
+      const debut = new Date()
+      debut.setDate(debut.getDate() - i)
+      debut.setHours(0, 0, 0, 0)
+      const fin = new Date(debut)
+      fin.setHours(23, 59, 59, 999)
+
+      let enPanne = 0, enRoute = 0
+
+      for (const camion of camions) {
+        const dernierStatut = await prisma.historiqueStatutCamion.findFirst({
+          where: { camionId: camion.id, date: { lte: fin } },
+          orderBy: { date: 'desc' }
+        })
+        const statut = dernierStatut ? dernierStatut.statut : camion.statut
+        if (statut === 'en_panne') enPanne++
+        if (statut === 'en_route') enRoute++
+      }
+
+      const total = camions.length
+      const disponibles = total - enPanne
+      resultat.push({
+        jour: jours[debut.getDay() === 0 ? 6 : debut.getDay() - 1],
+        tauxDispo: total > 0 ? Math.round((disponibles / total) * 100) : 0,
+        tauxUtilisation: disponibles > 0 ? Math.round((enRoute / disponibles) * 100) : 0
+      })
+    }
+
+    res.json(resultat)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
