@@ -42,6 +42,17 @@ app.get("/health", (req, res) => {
  
 module.exports = app
 
-
- 
+app.get('/seed-camions', async (req, res) => { 
+      const prisma = require('./prisma/client')
+    for (let j = 6; j >= 0; j--) {
+  for (const camion of camionsCreated) {
+    const d = new Date()
+    d.setDate(d.getDate() - j)
+    await prisma.historiqueStatutCamion.create({
+      data: { camionId: camion.id, statut: camion.statut, date: d }
+    })
+  }
+}
+}
+)
  
