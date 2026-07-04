@@ -141,6 +141,9 @@ exports.getKpiCamions = async (req, res) => {
 
 // Taux de utilisation et dispo
 
+
+// Taux de utilisation et dispo( baser sur livraison ): 
+
 exports.getTauxSemaine = async (req, res) => {
   try {
     const jours = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
@@ -154,7 +157,7 @@ exports.getTauxSemaine = async (req, res) => {
       const fin = new Date(debut)
       fin.setHours(23, 59, 59, 999)
 
-      let enPanne = 0, enRoute = 0
+      let enPanne = 0
 
       for (const camion of camions) {
         const dernierStatut = await prisma.historiqueStatutCamion.findFirst({
@@ -163,11 +166,22 @@ exports.getTauxSemaine = async (req, res) => {
         })
         const statut = dernierStatut ? dernierStatut.statut : camion.statut
         if (statut === 'en_panne') enPanne++
-        if (statut === 'en_route') enRoute++
       }
 
+      // Taux utilisation basé sur les livraisons du jour
+      const camionsUtilises = await prisma.livraison.findMany({
+        where: {
+          date: { gte: debut, lte: fin },
+          statut: { in: ['en_cours', 'livree'] }
+        },
+        select: { camionId: true },
+        distinct: ['camionId']
+      })
+
+      const enRoute = camionsUtilises.length
       const total = camions.length
       const disponibles = total - enPanne
+
       resultat.push({
         jour: jours[debut.getDay() === 0 ? 6 : debut.getDay() - 1],
         tauxDispo: total > 0 ? Math.round((disponibles / total) * 100) : 0,
