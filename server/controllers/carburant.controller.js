@@ -1,16 +1,26 @@
 const prisma = require('../prisma/client')
   const multer = require('multer')
-const path = require('path')
+const cloudinary = require('cloudinary').v2
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
 
-const storage = multer.diskStorage({
-  destination: 'uploads/',
-  filename: (req, file, cb) => {
-    cb(null, `recu_${Date.now()}${path.extname(file.originalname)}`)
-  }
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 })
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'yalau-recus',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'pdf'],
+  },
+})
+
 const upload = multer({ storage })
 
 exports.upload = upload.single('recu')
+
 
 // Ajouter un ravitaillement
 exports.create = async (req, res) => {
@@ -19,7 +29,7 @@ exports.create = async (req, res) => {
   try {
     const { camionId, chauffeurId, litres, type, ville, date, cout, livraisonId } = req.body
     const statut = type === 'station_externe' ? 'en_attente' : null  // AJOUTÉ
-     const recu = req.file ? req.file.filename : null // AJOUTÉ
+     const recu = req.file ? req.file.path : null // AJOUTÉ
     const camion = await prisma.camion.findUnique({ where: { id: parseInt(camionId) } })
     const chauffeur = await prisma.chauffeur.findUnique({ where: { id: parseInt(chauffeurId) } })
     const ravitaillement = await prisma.ravitaillement.create({
