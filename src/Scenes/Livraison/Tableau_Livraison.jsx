@@ -23,6 +23,8 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { VisibilityOutlined, EditOutlined, DeleteOutlined } from "@mui/icons-material";
 import AssignmentOutlined from "@mui/icons-material/AssignmentOutlined";
+import * as XLSX from 'xlsx'
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
 
 // filtre
 
@@ -38,13 +40,14 @@ import EditLivraisonDialog from './EditLivraisonDialog';//Edit
 import DeleteLivraisonDialog from './DeleteLivraisonDialog';
 
 
-function createData(id,date,num_livraison,camion,chauffeur,depart,destination,statut,position, camionId, chauffeurId,rawDate ) {
+function createData(id,date,num_livraison,camion,chauffeur,client,depart,destination,statut,position, camionId, chauffeurId,rawDate ) {
   return {
     id,
     date,
     num_livraison,
     camion,
     chauffeur,
+    client,
     depart,
     destination,
     statut,
@@ -97,6 +100,12 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: 'Chauffeur',
+  },
+  {
+    id: 'client',
+    numeric: true,
+    disablePadding: false,
+    label: 'Client'
   },
   {
     id: 'depart',
@@ -268,6 +277,7 @@ export default function Tableau_Livraison({refreshKey}) {
           l.numeroLivraison,
           l.camion ? l.camion.immatriculation : '—',
           l.chauffeur ? l.chauffeur.nom : '—',
+          l.client ||  '—' ,  // AJOUTÉ
           l.villeDepart,
           l.villeDestination,
           l.statut, 
@@ -343,11 +353,14 @@ export default function Tableau_Livraison({refreshKey}) {
     const [statut, setStatut] = useState("");
     const [date, setDate] = useState("");
     const [search, setSearch] = useState("");
+    
     const filteredRows = rows.filter((row) => {
   const matchSearch =
     (row.num_livraison || "").toLowerCase().includes(search.toLowerCase()) ||
     (row.camion || "").toLowerCase().includes(search.toLowerCase()) ||
-    (row.chauffeur || "").toLowerCase().includes(search.toLowerCase());
+    (row.chauffeur || "").toLowerCase().includes(search.toLowerCase()) ||
+    (row.client || "").toLowerCase().includes(search.toLowerCase()) // AJOUTÉ
+
 const matchDate = date === "" || row.date === date.split("-").reverse().join("/");
 
   const matchStatut = statut === "" || row.statut.toLowerCase() === statut.toLowerCase();
@@ -396,6 +409,23 @@ const handleDelete = async (livraison) => {
   } catch (error) {
     console.error('Erreur:', error)
   }
+}
+
+const handleExportClient = () => {
+  const rows_export = filteredRows.map(row => ({
+    'Date': row.date,
+    'Numéro': row.num_livraison,
+    'Camion': row.camion,
+    'Chauffeur': row.chauffeur,
+    'Client': row.client,
+    'Départ': row.depart,
+    'Destination': row.destination,
+    'Statut': row.statut,
+  }))
+  const ws = XLSX.utils.json_to_sheet(rows_export)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Livraisons')
+  XLSX.writeFile(wb, `livraisons_${search || 'tous'}_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.xlsx`)
 }
   return (
     <Box sx={{ width: '100%' , mt:7}}>
@@ -446,6 +476,8 @@ const handleDelete = async (livraison) => {
                           ),
                       }}
                       />
+
+                      
       
                       </Box>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -499,6 +531,7 @@ const handleDelete = async (livraison) => {
                     <TableCell align="right">{row.num_livraison}</TableCell>
                     <TableCell align="right">{row.camion}</TableCell>
                     <TableCell align="right">{row.chauffeur}</TableCell>
+                    <TableCell align="right">{row.client}</TableCell>
                     <TableCell align="right">{row.depart}</TableCell>
                     <TableCell align="right">{row.destination}</TableCell>
                     {/* Statut */}
@@ -580,7 +613,19 @@ const handleDelete = async (livraison) => {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      
+      <Box sx={{ display: 'flex', mt: 3, justifyContent: "space-between" }}>
+            
+        <Button
+                        variant="outlined"
+                        startIcon={<DownloadOutlinedIcon />}
+                        onClick={handleExportClient}
+                        size="small"
+                      >
+                        Exporter la liste (CSV)
+                      </Button>
+       </Box>
     </Box>
+
+    
   );
 }

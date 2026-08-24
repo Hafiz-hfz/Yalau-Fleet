@@ -21,6 +21,7 @@ const AddLivraisonDialog = ({ open, onClose,onRefresh  }) => {
     num_livraison: generateNumLivraison(), // auto-généré à l'ouverture
     camion: "",
     chauffeur: "",
+    client: "",
     ville_depart: "",
     ville_destination: "",
     date: "",
@@ -71,6 +72,7 @@ const AddLivraisonDialog = ({ open, onClose,onRefresh  }) => {
       body: JSON.stringify({
         camionId: formData.camion,
         chauffeurId: formData.chauffeur,
+        client: formData.client || null, // AJOUTÉ
         villeDepart: formData.ville_depart,
         villeDestination: formData.ville_destination,
         date: formData.date,
@@ -127,6 +129,19 @@ const AddLivraisonDialog = ({ open, onClose,onRefresh  }) => {
                     <TextField {...params} label="Chauffeur" size="small" error={!!errors.chauffeur} helperText={errors.chauffeur} />
                   )}
                 />
+
+
+                {/* Client */} 
+
+                  <TextField
+                    label="Client"
+                    name="client"
+                    value={formData.client}
+                    onChange={handleChange}
+                    placeholder="ex: Société XYZ"
+                    fullWidth
+                    size="small"
+                  />
              
                               {/* Ville depart */}
 

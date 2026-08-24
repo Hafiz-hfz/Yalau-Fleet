@@ -9,7 +9,7 @@ import {
 const EditLivraisonDialog = ({ open, onClose, livraison,onRefresh }) => {
 
  const [formData, setFormData] = useState({
-    camionId: "", chauffeurId: "", ville_depart: "", ville_destination: "", date: "", statut: "",
+    camionId: "", chauffeurId: "", ville_depart: "", ville_destination: "", date: "", statut: "", client: "",
   });
 
 const [camions, setCamions] = useState([])     // AJOUTÉ
@@ -32,6 +32,7 @@ const [camions, setCamions] = useState([])     // AJOUTÉ
     if (livraison) {
       setFormData({
         camionId: livraison.camionId || "",
+        client: livraison.client || "", // AJOUTÉ
         chauffeurId: livraison.chauffeurId || "",
         ville_depart: livraison.depart || "",
         ville_destination: livraison.destination || "",
@@ -57,6 +58,7 @@ const [camions, setCamions] = useState([])     // AJOUTÉ
         body: JSON.stringify({
           camionId: parseInt(formData.camionId),
           chauffeurId: parseInt(formData.chauffeurId),
+          client: formData.client || null, // AJOUTÉ
           villeDepart: formData.ville_depart,
           villeDestination: formData.ville_destination,
           date: formData.date,
@@ -114,6 +116,18 @@ const [camions, setCamions] = useState([])     // AJOUTÉ
             renderInput={(params) => (
               <TextField {...params} label="Chauffeur" size="small" />
             )}
+          />
+
+          {/* Client */}
+
+          <TextField
+            label="Client"
+            name="client"
+            value={formData.client}
+            onChange={handleChange}
+            placeholder="ex: Société XYZ"
+            fullWidth
+            size="small"
           />
 
 

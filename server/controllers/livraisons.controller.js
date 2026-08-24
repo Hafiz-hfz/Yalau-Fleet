@@ -3,13 +3,14 @@
 // Ajouter une livraison
 exports.create = async (req, res) => {
   try {
-    const {  camionId, chauffeurId, villeDepart, villeDestination, date, statut } = req.body
+    const {  camionId, chauffeurId, client ,  villeDepart, villeDestination, date, statut } = req.body
     const camion = await prisma.camion.findUnique({ where: { id: parseInt(camionId) } })
     const chauffeur = await prisma.chauffeur.findUnique({ where: { id: parseInt(chauffeurId) } })
     const livraison = await prisma.livraison.create({
       data: {
         camionId: parseInt(camionId),
         chauffeurId: parseInt(chauffeurId),
+        client: client || null ,  // AJOUTÉ,
         villeDepart,
         villeDestination,
         date: new Date(date),
@@ -52,12 +53,13 @@ exports.getAll = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const { id } = req.params
-    const { camionId, chauffeurId, villeDepart, villeDestination, date, statut } = req.body
+    const { camionId, chauffeurId, client ,  villeDepart, villeDestination, date, statut } = req.body
     const livraison = await prisma.livraison.update({
       where: { id: parseInt(id) },
       data: { 
         camionId: parseInt(camionId),
         chauffeurId: parseInt(chauffeurId),
+        client: client || null,  // AJOUTÉ,
         villeDepart,
         villeDestination,
         date: new Date(date),

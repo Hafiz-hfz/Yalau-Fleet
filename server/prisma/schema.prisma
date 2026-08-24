@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
 }
 
 model Camion {
@@ -46,6 +47,7 @@ model Livraison {
   villeDepart      String
   villeDestination String
   date             DateTime
+  client           String? 
   statut           String   @default("en_attente")
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
